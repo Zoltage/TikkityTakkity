@@ -5,7 +5,6 @@ class ttt:
 		self.gridSize = size
 		self.grid = self.createGrid()
 
-		# If using minimax algorithm, user is maximizer(1) and computer is minimizer(-1)
 		# If single player, then user is 1, computer is -1
 		# If multiplayer, user1 is 1, user2 = -1
 		self.turn = 1
