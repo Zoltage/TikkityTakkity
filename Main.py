@@ -1,11 +1,14 @@
 # Jacob Mathews
-# TicTacToe
-# 9 / 9 / 21
+# Tikkity Takkity
+# 9/9/21
 
-from tkinter import *
-import Gui
+from tkinter import messagebox
+import gui
 
-if __name__ =="__main__":
-    Gui.GuiController()
+if (__name__ == "__main__"):
+	controller = gui.GUIController()
+ 
+	gui.window.option_add( "*font", "roboto 20")
 
-    Gui.win.option_add("*font", "roboto 20")
+	controller.disHome()
+
