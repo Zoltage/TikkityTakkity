@@ -38,7 +38,7 @@ class ttt:
 			grid = self.grid
 
 
-		# Row
+		# check row for winner
 		found = True
 		for j in range(self.gridSize-1):
 			if (grid[index[0]][j] != grid[index[0]][j+1] or grid[index[0]][j] == 0):
@@ -48,7 +48,7 @@ class ttt:
 			self.winner = self.turn
 			return self.turn
 		
-		# Column
+		# check column for winner
 		found = True
 		for i in range(self.gridSize-1):
 			if (grid[i][index[1]] != grid[i+1][index[1]] or grid[i][index[1]] == 0):
@@ -58,7 +58,7 @@ class ttt:
 			self.winner = self.turn
 			return self.turn
 		
-		# Top Left to Bottom Right Diagonal
+		# Top Left to Bottom Right Diagonal - checking for winner
 		if (index[0] == index[1]):
 			found = True
 			for i in range(self.gridSize-1):
@@ -69,7 +69,7 @@ class ttt:
 				self.winner = self.turn
 				return self.turn
 
-		# Top Right to Bottom Left Diagonal
+		# Top Right to Bottom Left Diagonal - checking for winner
 		if (index[0] + index[1] == self.gridSize-1):
 			found = True
 			for i in range(self.gridSize-1):

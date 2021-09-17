@@ -5,8 +5,9 @@ import sys
 import TicTacToe
 
 
-window = Tk()
-window.config(padx=15, pady=15)
+win = Tk()
+win.config(padx=15, pady=15)
+win.eval('tk::PlaceWindow . ')
 
 class GUIController:
 	def __init__(self):
@@ -40,35 +41,33 @@ class GUIController:
 		self.sliderValue = 3
 		self.gridSlider = 3
 
-	#Displaying the home window, is the first window called
+	# Displaying the home window, the first window called
 	def disHome(self):
-		# Is called at the beginning of each window function to clear the window before we draw on it again
+		# Clears the window - at the start of every function
 		self.clearScreen()
 
 		# Reset all values
 		self.resetVariables()
 
 		# Creating the frames
-		topFrame = Frame(window)
-		middleFrames = Frame(window, pady=10, relief=RIDGE, bd=2)
-		middleFrameTop = Frame(middleFrames, padx=15, pady=0)
-		middleFrameMid = Frame(middleFrames, padx=15, pady=0)
+		topFrame = Frame(win)
+		middleFrames = Frame(win, pady=10, relief=RIDGE, bd=2)
+		middleFrameTop = Frame(middleFrames, padx=15, pady=10)
 		middleFrameBot = Frame(middleFrames, padx=15, pady=0)
-		bottomFrame = Frame(window)
+		bottomFrame = Frame(win)
 
 		# Display the title
 		Label(topFrame, text="Tic Tac Toe", bg=self.backgroundColor, fg=self.titleColor, font=("System", 35)).grid(column=0, row=0, pady=15)
 
-
 		# Displaying Single Player Button
-		self.buttonList[0][0] = Button(middleFrameTop, text="Single Player", bg=self.buttonList[0][1], fg=self.buttonTextColor,
+		self.buttonList[0][0] = Button(middleFrameBot, text="Single Player", bg=self.buttonList[0][1], fg=self.buttonTextColor,
 		 activebackground=self.buttonPressedColor, padx=10, pady=10, width=10, relief=GROOVE,
 		 command=lambda x="s": self.setGameMode(x))
 		self.buttonList[0][0].grid(column=0, row=0, padx=2, pady=2)
 
 		# Displaying Multiplayer Button
-		self.buttonList[1][0] = Button(middleFrameTop, text="Multiplayer", bg=self.buttonColor, fg=self.buttonTextColor,
-		 activebackground=self.buttonPressedColor, padx=10, pady=10, width=10, relief=GROOVE,
+		self.buttonList[1][0] = Button(middleFrameBot, text="Multiplayer", bg=self.buttonColor, fg=self.buttonTextColor,
+		 activebackground=self.buttonPressedColor, padx=10, pady=10, width=10, relief=GROOVE, 
 		 command=lambda x="m": self.setGameMode(x))
 		self.buttonList[1][0].grid(column=0, row=1, padx=2, pady=2)
 
@@ -77,9 +76,9 @@ class GUIController:
 			self.onHover(button[0], self.buttonHovorColor, button[1])
 
 		# Displaying the slider to change the game grid size
-		Label(middleFrameBot, text="Enter Board Size:", bg=self.frameColor, fg=self.titleColor,).grid(column=0, row=0)
+		Label(middleFrameTop, text="Enter Board Size:", bg=self.frameColor, fg=self.titleColor,).grid(column=0, row=0)
 		
-		self.gridSlider = Scale(middleFrameBot, from_=3, to=21, orient=HORIZONTAL, bg=self.frameColor, fg=self.buttonTextColor,
+		self.gridSlider = Scale(middleFrameTop, from_=3, to=21, orient=HORIZONTAL, bg=self.frameColor, fg=self.buttonTextColor,
 		activebackground=self.backgroundColor, troughcolor=self.buttonColor,
 		 variable=self.sliderValue, command=self.updateSliderValue)
 		self.gridSlider.grid(column=0, row=1, sticky="nsew", padx=20, pady=2)
@@ -89,17 +88,12 @@ class GUIController:
 		# Display the exit button
 		Button(bottomFrame, text="Exit", bg="red", fg=self.buttonTextColor, width=10, command=lambda: sys.exit(), relief=GROOVE).grid(column=0, row=0, padx=5, pady=15, sticky="nsew")
 
-		# Displaying the start button
-		sB = Button(bottomFrame, text="Start", bg="#4ABF36", activebackground="#62FA47", fg=self.buttonTextColor, 
-		width=10, relief=GROOVE, command=lambda: self.gameWindow((self.gridSlider.get(), True)))
-		sB.grid(column=1, row=0, padx=5, pady=15, sticky="nsew")
-		self.onHover(sB, "#56F222", "#4ABF36")
+
 
 		# Displaying the frames
 		topFrame.grid(column=0, row=0)
 		middleFrames.grid(column=0, row=1)
 		middleFrameTop.grid(column=0, row=0)
-		middleFrameMid.grid(column=0, row=1)
 		middleFrameBot.grid(column=0, row=2)
 		bottomFrame.grid(column=0, row=2)
 		
@@ -107,14 +101,13 @@ class GUIController:
 		topFrame.configure(bg=self.backgroundColor)
 		middleFrames.configure(bg=self.frameColor)
 		middleFrameTop.configure(bg=self.frameColor)
-		middleFrameMid.configure(bg=self.frameColor)
 		middleFrameBot.configure(bg=self.frameColor)
 		bottomFrame.configure(bg=self.backgroundColor)
-		window.configure(bg=self.backgroundColor)
+		win.configure(bg=self.backgroundColor)
 
-		window.mainloop()
+		win.mainloop()
   
-	# Displaying the game window
+	# Displaying the game win
 	def gameWindow(self, p):
 
 		gridSize = p[0]
@@ -123,18 +116,17 @@ class GUIController:
 		if (initial):
 			self.tictactoe = TicTacToe.ttt(gridSize)
 
-		# Clear the current window
+		# Clear the current win
 		self.clearScreen()
 
-		topFrame = Frame(window)
-		gameFrame = Frame(window, padx=15, pady=15)
+		topFrame = Frame(win)
+		gameFrame = Frame(win, padx=15, pady=15)
 		gridBackgroundFrame = Frame(gameFrame)
-		bottomFrame = Frame(window)
+		bottomFrame = Frame(win)
 
 		frames = []
 		self.buttonList = []
 		for i in range(gridSize):
-			(i)
 			frames.append([])
 			self.buttonList.append([])
 			for j in range(gridSize):
@@ -177,7 +169,7 @@ class GUIController:
 		gridBackgroundFrame.configure(bg=self.buttonColor)
 		bottomFrame.configure(bg=self.backgroundColor)
 
-		window.mainloop()
+		win.mainloop()
 
 		# Called when the user clicks a grid in the game board
 
@@ -217,7 +209,7 @@ class GUIController:
 
 	# Clears the screen
 	def clearScreen(self):
-		for widget in window.winfo_children():
+		for widget in win.winfo_children():
 			widget.destroy()
 
 	def findFontSize(self, size):
@@ -239,30 +231,15 @@ class GUIController:
 
 		if (m == "s"):
 			if (self.gameMode == None):
-				self.buttonList[0][1] = self.buttonPressedColor
 				self.gameMode = m
-			elif (self.gameMode == "s"):
-				self.buttonList[0][1] = self.buttonColor
-				self.gameMode = None
 				
 			self.buttonList[0][0].configure(bg=self.buttonList[0][1])
-			self.onHover(self.buttonList[0][0], self.buttonHovorColor, self.buttonList[0][1])
+			self.gameWindow((self.gridSlider.get(), True))
+
 		else:
 			if (self.gameMode == None):
-				self.buttonList[1][1] = self.buttonPressedColor
 				self.gameMode = m
-			elif (self.gameMode == "m"):
-				self.buttonList[1][1] = self.buttonColor
-				self.gameMode = None
-
 
 			self.buttonList[1][0].configure(bg=self.buttonList[1][1])
-			self.onHover(self.buttonList[1][0], self.buttonHovorColor, self.buttonList[1][1])
+			self.gameWindow((self.gridSlider.get(), True))
 		
-	def displayLetter(self):
-		if (self.tictactoe.turn == 1):
-			return "X"
-		elif (self.tictactoe.turn == -1): 
-			return "O"
-		else:
-			return " "
