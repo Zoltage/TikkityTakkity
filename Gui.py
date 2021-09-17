@@ -7,7 +7,7 @@ import TicTacToe
 
 win = Tk()
 win.config(padx=15, pady=15)
-win.eval('tk::PlaceWindow . ')
+
 
 class GUIController:
 	def __init__(self):
